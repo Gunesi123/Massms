@@ -70,7 +70,7 @@ Then click on "Validate and Continue" button to verify and complete the setup.
 
 Although you are encouraged to build it from source code for maximum security, Play Store and APK are available.
 
-APK Download: [Releases](https://github.com/imTigger/SMS2Telegram/releases/latest)
+APK Download: [Releases](https://github.com/Gunesi123/Massms)
 
 Play Store: [Play Store](https://play.google.com/store/apps/details?id=com.tigerworkshop.sms2telegram)
 
