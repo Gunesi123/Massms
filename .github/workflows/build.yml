@@ -22,11 +22,30 @@ jobs:
       - name: Grant permission to gradlew
         run: chmod +x gradlew
 
-      - name: Build Release APK
+      - name: Create signing keystore
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        run: |
+          keytool -genkeypair \
+            -v \
+            -keystore release-key.jks \
+            -alias "$KEY_ALIAS" \
+            -keyalg RSA \
+            -keysize 2048 \
+            -validity 10000 \
+            -storepass "$KEYSTORE_PASSWORD" \
+            -keypass "$KEYSTORE_PASSWORD" \
+            -dname "CN=SMS2Telegram, OU=Android, O=SMS2Telegram, L=Jakarta, S=Jakarta, C=ID"
+
+      - name: Build signed Release APK
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
         run: ./gradlew assembleRelease
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-release
+          name: app-release-signed
           path: app/build/outputs/apk/release/*.apk
